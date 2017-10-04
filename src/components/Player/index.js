@@ -22,7 +22,7 @@ class Player extends React.Component {
   }
 
   componentDidUpdate() {
-    const audioElement = ReactDOM.findDOMNode(this.refs.audio);
+    const audioElement = ReactDOM.findDOMNode(this.audio);
 
     if (!audioElement) { return; }
 
@@ -38,7 +38,7 @@ class Player extends React.Component {
   }
 
   setAudioPosition(ev) {
-    const audioElement = ReactDOM.findDOMNode(this.refs.audio);
+    const audioElement = ReactDOM.findDOMNode(this.audio);
     if (!audioElement) { return; }
     const songPercentage = ev.clientX / window.innerWidth;
     const duration = audioElement.duration;
@@ -62,7 +62,7 @@ class Player extends React.Component {
 
   handleTimeUpdate(event) {
     const timeElapsedElement = document.getElementById('player-status-time');
-    const audioElement = ReactDOM.findDOMNode(this.refs.audio);
+    const audioElement = ReactDOM.findDOMNode(this.audio);
     if (!timeElapsedElement || !audioElement) return;
     if (event.target.currentTime > 0) {
       const timeInSeconds = Math.floor(event.target.currentTime);
@@ -220,7 +220,11 @@ class Player extends React.Component {
                 </div>
               </Clipboard>
           </div>
-          <audio id="audio" ref="audio" src={addTempClientIdWith(stream_url, '?')}></audio>
+          <audio
+            id="audio"
+            ref="{audioNode => this.audio = audioNode}"
+            src={addTempClientIdWith(stream_url, '?')}
+          ></audio>
           <ReactTooltip id="global" delayShow={1000} place="top" aria-haspopup="true" effect="solid" />
         </div>
       </div>
